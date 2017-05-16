@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "cross-env PORT=4100 react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack -p --config=webpack.config.js",
     "test": "cross-env PORT=4100 react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

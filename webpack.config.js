@@ -31,16 +31,16 @@ module.exports = {
           presets:[ 'es2015', 'react', 'stage-2' ]
         }
       },
-      {test: /\.css$/, loader: 'style!css?sourceMap'},
-      {test: /\.json$/, loader: 'json'},
-      {test: /\.mp4/, loader: 'url?limit=' + embedFileSize + '&mimetype=video/mp4'},
-      {test: /\.svg/, loader: 'url?limit=' + embedFileSize + '&mimetype=image/svg+xml'},
-      {test: /\.png$/, loader: 'url?limit=' + embedFileSize + '&mimetype=image/png'},
-      {test: /\.jpg/, loader: 'url?limit=' + embedFileSize + '&mimetype=image/jpeg'},
-      {test: /\.gif/, loader: 'url?limit=' + embedFileSize + '&mimetype=image/gif'},
+      {test: /\.css$/, loader: 'style-loader!css-loader?sourceMap'},
+      {test: /\.json$/, loader: 'json-loader'},
+      {test: /\.mp4/, loader: 'url-loader?limit=' + embedFileSize + '&mimetype=video/mp4'},
+      {test: /\.svg/, loader: 'url-loader?limit=' + embedFileSize + '&mimetype=image/svg+xml'},
+      {test: /\.png$/, loader: 'url-loader?limit=' + embedFileSize + '&mimetype=image/png'},
+      {test: /\.jpg/, loader: 'url-loader?limit=' + embedFileSize + '&mimetype=image/jpeg'},
+      {test: /\.gif/, loader: 'url-loader?limit=' + embedFileSize + '&mimetype=image/gif'},
       {
         test: /\.(otf|eot|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=' + embedFileSize
+        loader: 'url-loader?limit=' + embedFileSize
       }
     ],
     /*preLoaders: [

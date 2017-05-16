@@ -14,9 +14,9 @@ import ProfileFavorites from './components/ProfileFavorites';
 import Register from './components/Register';
 import Settings from './components/Settings';
 
-import "/assets/styles/ionicons.min.css"
-import "/assets/styles/main.css"
-import "/assets/styles/titillium.css"
+import "./assets/css/ionicons.css"
+import "./assets/css/main.css"
+import "./assets/css/titillium.css"
 
 ReactDOM.render((
   <Provider store={store}>
