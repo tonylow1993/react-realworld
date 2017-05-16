@@ -10,14 +10,14 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
-  plugins: [
+  /*plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin()/*,
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: options.devtool && (options.devtool.indexOf("sourcemap") >= 0 || options.devtool.indexOf("source-map") >= 0)
-    })*/
-  ],
+    })
+  ],*/
   resolve: {
     extensions: ['.js','.jsx', '.css']
   },
