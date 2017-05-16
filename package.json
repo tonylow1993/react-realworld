@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "cross-env PORT=4100 react-scripts start",
-    "build": "rm -rf public && cp -pr src/static/ public && webpack -p --config=webpack.config.js",
+    "build": "rm -rf server/public && cp -pr src/static/ server/public && webpack -p --config=webpack.config.js",
     "test": "cross-env PORT=4100 react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint --config=.eslintrc **/*.js"
