@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'server', 'public', 'assets'),
     filename: 'bundle.js',
-    publicPath: 'server/assets/'
+    publicPath: '/assets/'
   },
   /*plugins: [
     new webpack.optimize.DedupePlugin(),

@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 
 app.use(require('method-override')());
 app.use(express.static(__dirname + '/public'));
+//app.use("/assets", express.static(__dirname + '/assets'));
 
 app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
 
@@ -78,9 +79,6 @@ app.use(function(err, req, res, next) {
     error: {}
   }});
 });
-
-//Provide static files
-app.use(express.static('public'));
 
 // finally, let's start our server...
 var server = app.listen( process.env.PORT || 3000, function(){
