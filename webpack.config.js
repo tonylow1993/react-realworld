@@ -3,6 +3,7 @@ let webpack = require('webpack');
 const embedFileSize = 65536;
 
 module.exports = {
+  devtool: 'cheap-eval-source-map',
   entry: [
     './src/index'
   ],
@@ -52,6 +53,10 @@ module.exports = {
       }
     ]*/
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'server', 'public'),
+    inline: true
+  }
   /*eslint: {
     configFile: '.eslintrc'
   }*/
