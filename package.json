@@ -36,7 +36,8 @@
   },
   "scripts": {
     "dist": "npm run build && npm run start",
-    "start": "node server/app.js",
+    "start": "pm2 start server/app.js --name=realworld",
+    "stop": "pm2 stop realworld",
     "build": "rm -rf server/public && cp -pr src/static/ server/public && webpack -p --config=webpack.config.js",
     "test": "cross-env PORT=4100 react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
