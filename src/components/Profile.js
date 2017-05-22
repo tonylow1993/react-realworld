@@ -23,7 +23,7 @@ const EditProfileSettings = props => {
   return null;
 };
 
-const FollowUserButton = props => {
+export const FollowUserButton = props => {
   if (props.isUser) {
     return null;
   }
