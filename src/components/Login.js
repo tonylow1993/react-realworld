@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import ListErrors from './ListErrors';
 import React from 'react';
+import FontAwesome from 'react-fontawesome';
 import agent from '../agent';
 import { connect } from 'react-redux';
 import {
@@ -8,6 +9,7 @@ import {
   LOGIN,
   LOGIN_PAGE_UNLOADED
 } from '../constants/actionTypes';
+import '../assets/css/font-awesome.min.css'
 
 const mapStateToProps = state => ({ ...state.auth });
 
@@ -85,6 +87,17 @@ export class Login extends React.Component {
 
                 </fieldset>
               </form>
+
+              <h4 className="text-xs-center">OR</h4>
+
+              <button className="btn btn-facebook btn-huge block" href="/auth/facebook">
+                <FontAwesome name='facebook' />Continue with Facebook
+              </button>
+
+              <button className="btn btn-google btn-huge block" href="/auth/google">
+                <FontAwesome name='google' />Continue with Google
+              </button>
+
             </div>
 
           </div>
