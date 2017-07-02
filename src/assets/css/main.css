@@ -5087,15 +5087,12 @@ footer {
 
 .btn {
     padding: 8px 20px;
-    border: 0;
     margin: 10px 1px;
     cursor: pointer;
     border-radius: 2px;
     text-decoration: none;
-    color: hsla(0,0%,100%,.84);
     outline: 0!important;
     position: relative;
-    color: #fff;
     text-transform: uppercase;
     font-weight: 500;
 }

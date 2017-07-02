@@ -1,0 +1,96 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,500,200);
+
+body {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.bg {
+  background-image: url('../img/banner.jpg');
+  background-size: cover;
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+  display: block;
+  height: 110%;
+  width: 110%;
+  left: -10px;
+  position: fixed;
+  top: -10px;
+  right: 0;
+  z-index: 1;
+  transition: all 1000ms;
+  background-size: 100%;
+  background-position: center;
+}
+
+.cover:hover .bg {
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+  background-size: 110%;
+  background-position: center;
+}
+
+.title {
+  font-family: Raleway;
+  width: 500px;
+  height: 350px;
+  z-index: 3;
+  top: 50%;
+  margin-top: -175px;
+  left: 44%;
+  margin-left: -140px;
+  position: absolute;
+  color: #fff;
+  text-align: center;
+}
+
+.cover:hover .title {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+
+.title .text {
+  font-size: 35px;
+  font-weight: 200;
+  margin-top: 20px;
+}
+
+.title .desc {
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 30px;
+}
+
+.logo {
+  background: url(http://shrani.si/f/I/Ze/4Qj9jIQ9/logo.png);
+  width: 180px;
+  height: 180px;
+  left: 50%;
+  position: relative;
+  margin-left: -90px;
+  margin-top: 10px;
+  background-size: 180px;
+}
+
+
+/*social buttons*/
+.social {
+  position:fixed;
+  bottom:15px;
+  z-index:10;
+  text-align: center;
+  width:100%;
+}
+
+.social a {
+  font-family: Raleway;
+  color:white;
+  text-decoration:none;
+  margin-left:5px;
+  margin-right:5px;
+  filter: blur(2px);
+  transition: all 200ms;
+}
+
+.social a:hover {
+  font-size:19px;
+}
