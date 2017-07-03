@@ -5,7 +5,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import store from './store';
 
 import App from './components/App';
-import Article from './components/Article';
+import Challenge from './components/Challenge';
 import Editor from './components/Editor';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -27,7 +27,7 @@ ReactDOM.render((
         <Route path="register" component={Register} />
         <Route path="editor" component={Editor} />
         <Route path="editor/:slug" component={Editor} />
-        <Route path="article/:id" component={Article} />
+        <Route path="challenge/:id" component={Challenge} />
         <Route path="settings" component={Settings} />
         <Route path="@:username" component={Profile} />
         <Route path="@:username/favorites" component={ProfileFavorites} />

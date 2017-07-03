@@ -1,19 +1,19 @@
 var router = require('express').Router();
 var passport = require('passport');
 var mongoose = require('mongoose');
-var Article = mongoose.model('Article');
+var Challenge = mongoose.model('Challenge');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var auth = require('../auth');
 
-// Preload article objects on routes with ':article'
-router.param('article', function(req, res, next, slug) {
-  Article.findOne({ slug: slug})
+// Preload challenge objects on routes with ':challenge'
+router.param('challenge', function(req, res, next, slug) {
+  Challenge.findOne({ slug: slug})
     .populate('author')
-    .then(function (article) {
-      if (!article) { return res.sendStatus(404); }
+    .then(function (challenge) {
+      if (!challenge) { return res.sendStatus(404); }
 
-      req.article = article;
+      req.challenge = challenge;
 
       return next();
     }).catch(next);
@@ -64,24 +64,24 @@ router.get('/', auth.optional, function(req, res, next) {
     }
 
     return Promise.all([
-      Article.find(query)
+      Challenge.find(query)
         .limit(Number(limit))
         .skip(Number(offset))
         .sort({createdAt: 'desc'})
         .populate('author')
         .exec(),
-      Article.count(query).exec(),
+      Challenge.count(query).exec(),
       req.payload ? User.findById(req.payload.id) : null,
     ]).then(function(results){
-      var articles = results[0];
-      var articlesCount = results[1];
+      var challenges = results[0];
+      var challengesCount = results[1];
       var user = results[2];
 
       return res.json({
-        articles: articles.map(function(article){
-          return article.toJSONFor(user);
+        challenges: challenges.map(function(challenge){
+          return challenge.toJSONFor(user);
         }),
-        articlesCount: articlesCount
+        challengesCount: challengesCount
       });
     });
   }).catch(next);
@@ -103,21 +103,21 @@ router.get('/feed', auth.required, function(req, res, next) {
     if (!user) { return res.sendStatus(401); }
 
     Promise.all([
-      Article.find({ author: {$in: user.following}})
+      Challenge.find({ author: {$in: user.following}})
         .limit(Number(limit))
         .skip(Number(offset))
         .populate('author')
         .exec(),
-      Article.count({ author: {$in: user.following}})
+      Challenge.count({ author: {$in: user.following}})
     ]).then(function(results){
-      var articles = results[0];
-      var articlesCount = results[1];
+      var challenges = results[0];
+      var challengesCount = results[1];
 
       return res.json({
-        articles: articles.map(function(article){
-          return article.toJSONFor(user);
+        challenges: challenges.map(function(challenge){
+          return challenge.toJSONFor(user);
         }),
-        articlesCount: articlesCount
+        challengesCount: challengesCount
       });
     }).catch(next);
   });
@@ -127,51 +127,51 @@ router.post('/', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
 
-    var article = new Article(req.body.article);
+    var challenge = new Challenge(req.body.challenge);
 
-    article.author = user;
+    challenge.author = user;
 
-    return article.save().then(function(){
-      console.log(article.author);
-      return res.json({article: article.toJSONFor(user)});
+    return challenge.save().then(function(){
+      console.log(challenge.author);
+      return res.json({challenge: challenge.toJSONFor(user)});
     });
   }).catch(next);
 });
 
-// return a article
-router.get('/:article', auth.optional, function(req, res, next) {
+// return a challenge
+router.get('/:challenge', auth.optional, function(req, res, next) {
   Promise.all([
     req.payload ? User.findById(req.payload.id) : null,
-    req.article.populate('author').execPopulate()
+    req.challenge.populate('author').execPopulate()
   ]).then(function(results){
     var user = results[0];
 
-    return res.json({article: req.article.toJSONFor(user)});
+    return res.json({challenge: req.challenge.toJSONFor(user)});
   }).catch(next);
 });
 
-// update article
-router.put('/:article', auth.required, function(req, res, next) {
+// update challenge
+router.put('/:challenge', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
-    if(req.article.author._id.toString() === req.payload.id.toString()){
-      if(typeof req.body.article.title !== 'undefined'){
-        req.article.title = req.body.article.title;
+    if(req.challenge.author._id.toString() === req.payload.id.toString()){
+      if(typeof req.body.challenge.title !== 'undefined'){
+        req.challenge.title = req.body.challenge.title;
       }
 
-      if(typeof req.body.article.description !== 'undefined'){
-        req.article.description = req.body.article.description;
+      if(typeof req.body.challenge.description !== 'undefined'){
+        req.challenge.description = req.body.challenge.description;
       }
 
-      if(typeof req.body.article.body !== 'undefined'){
-        req.article.body = req.body.article.body;
+      if(typeof req.body.challenge.body !== 'undefined'){
+        req.challenge.body = req.body.challenge.body;
       }
 
-      if(typeof req.body.article.tagList !== 'undefined'){
-        req.article.tagList = req.body.article.tagList
+      if(typeof req.body.challenge.tagList !== 'undefined'){
+        req.challenge.tagList = req.body.challenge.tagList
       }
 
-      req.article.save().then(function(article){
-        return res.json({article: article.toJSONFor(user)});
+      req.challenge.save().then(function(challenge){
+        return res.json({challenge: challenge.toJSONFor(user)});
       }).catch(next);
     } else {
       return res.sendStatus(403);
@@ -179,13 +179,13 @@ router.put('/:article', auth.required, function(req, res, next) {
   });
 });
 
-// delete article
-router.delete('/:article', auth.required, function(req, res, next) {
+// delete challenge
+router.delete('/:challenge', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
 
-    if(req.article.author._id.toString() === req.payload.id.toString()){
-      return req.article.remove().then(function(){
+    if(req.challenge.author._id.toString() === req.payload.id.toString()){
+      return req.challenge.remove().then(function(){
         return res.sendStatus(204);
       });
     } else {
@@ -194,40 +194,40 @@ router.delete('/:article', auth.required, function(req, res, next) {
   }).catch(next);
 });
 
-// Favorite an article
-router.post('/:article/favorite', auth.required, function(req, res, next) {
-  var articleId = req.article._id;
+// Favorite an challenge
+router.post('/:challenge/favorite', auth.required, function(req, res, next) {
+  var challengeId = req.challenge._id;
 
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
 
-    return user.favorite(articleId).then(function(){
-      return req.article.updateFavoriteCount().then(function(article){
-        return res.json({article: article.toJSONFor(user)});
+    return user.favorite(challengeId).then(function(){
+      return req.challenge.updateFavoriteCount().then(function(challenge){
+        return res.json({challenge: challenge.toJSONFor(user)});
       });
     });
   }).catch(next);
 });
 
-// Unfavorite an article
-router.delete('/:article/favorite', auth.required, function(req, res, next) {
-  var articleId = req.article._id;
+// Unfavorite an challenge
+router.delete('/:challenge/favorite', auth.required, function(req, res, next) {
+  var challengeId = req.challenge._id;
 
   User.findById(req.payload.id).then(function (user){
     if (!user) { return res.sendStatus(401); }
 
-    return user.unfavorite(articleId).then(function(){
-      return req.article.updateFavoriteCount().then(function(article){
-        return res.json({article: article.toJSONFor(user)});
+    return user.unfavorite(challengeId).then(function(){
+      return req.challenge.updateFavoriteCount().then(function(challenge){
+        return res.json({challenge: challenge.toJSONFor(user)});
       });
     });
   }).catch(next);
 });
 
-// return an article's comments
-router.get('/:article/comments', auth.optional, function(req, res, next){
+// return an challenge's comments
+router.get('/:challenge/comments', auth.optional, function(req, res, next){
   Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function(user){
-    return req.article.populate({
+    return req.challenge.populate({
       path: 'comments',
       populate: {
         path: 'author'
@@ -237,8 +237,8 @@ router.get('/:article/comments', auth.optional, function(req, res, next){
           createdAt: 'desc'
         }
       }
-    }).execPopulate().then(function(article) {
-      return res.json({comments: req.article.comments.map(function(comment){
+    }).execPopulate().then(function(challenge) {
+      return res.json({comments: req.challenge.comments.map(function(comment){
         return comment.toJSONFor(user);
       })});
     });
@@ -246,28 +246,28 @@ router.get('/:article/comments', auth.optional, function(req, res, next){
 });
 
 // create a new comment
-router.post('/:article/comments', auth.required, function(req, res, next) {
+router.post('/:challenge/comments', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if(!user){ return res.sendStatus(401); }
 
     var comment = new Comment(req.body.comment);
-    comment.article = req.article;
+    comment.challenge = req.challenge;
     comment.author = user;
 
     return comment.save().then(function(){
-      req.article.comments.push(comment);
+      req.challenge.comments.push(comment);
 
-      return req.article.save().then(function(article) {
+      return req.challenge.save().then(function(challenge) {
         res.json({comment: comment.toJSONFor(user)});
       });
     });
   }).catch(next);
 });
 
-router.delete('/:article/comments/:comment', auth.required, function(req, res, next) {
+router.delete('/:challenge/comments/:comment', auth.required, function(req, res, next) {
   if(req.comment.author.toString() === req.payload.id.toString()){
-    req.article.comments.remove(req.comment._id);
-    req.article.save()
+    req.challenge.comments.remove(req.comment._id);
+    req.challenge.save()
       .then(Comment.find({_id: req.comment._id}).remove().exec())
       .then(function(){
         res.sendStatus(204);

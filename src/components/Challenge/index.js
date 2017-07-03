@@ -1,28 +1,28 @@
-import ArticleMeta from './ArticleMeta';
+import ChallengeMeta from './ChallengeMeta';
 import CommentContainer from './CommentContainer';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import marked from 'marked';
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
+import { CHALLENGE_PAGE_LOADED, CHALLENGE_PAGE_UNLOADED } from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({
-  ...state.article,
+  ...state.challenge,
   currentUser: state.common.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload =>
-    dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
+    dispatch({ type: CHALLENGE_PAGE_LOADED, payload }),
   onUnload: () =>
-    dispatch({ type: ARTICLE_PAGE_UNLOADED })
+    dispatch({ type: CHALLENGE_PAGE_UNLOADED })
 });
 
-class Article extends React.Component {
+class Challenge extends React.Component {
   componentWillMount() {
     this.props.onLoad(Promise.all([
-      agent.Articles.get(this.props.params.id),
-      agent.Comments.forArticle(this.props.params.id)
+      agent.Challenges.get(this.props.params.id),
+      agent.Comments.forChallenge(this.props.params.id)
     ]));
   }
 
@@ -31,22 +31,22 @@ class Article extends React.Component {
   }
 
   render() {
-    if (!this.props.article) {
+    if (!this.props.challenge) {
       return null;
     }
 
-    const markup = { __html: marked(this.props.article.body, { sanitize: true }) };
+    const markup = { __html: marked(this.props.challenge.body, { sanitize: true }) };
     const canModify = this.props.currentUser &&
-      this.props.currentUser.username === this.props.article.author.username;
+      this.props.currentUser.username === this.props.challenge.author.username;
     return (
-      <div className="article-page">
+      <div className="challenge-page">
 
         <div className="banner">
           <div className="container">
 
-            <h1>{this.props.article.title}</h1>
-            <ArticleMeta
-              article={this.props.article}
+            <h1>{this.props.challenge.title}</h1>
+            <ChallengeMeta
+              challenge={this.props.challenge}
               canModify={canModify} />
 
           </div>
@@ -54,14 +54,14 @@ class Article extends React.Component {
 
         <div className="container page">
 
-          <div className="row article-content">
+          <div className="row challenge-content">
             <div className="col-xs-12">
 
               <div dangerouslySetInnerHTML={markup}></div>
 
               <ul className="tag-list">
                 {
-                  this.props.article.tagList.map(tag => {
+                  this.props.challenge.tagList.map(tag => {
                     return (
                       <li
                         className="tag-default tag-pill tag-outline"
@@ -78,7 +78,7 @@ class Article extends React.Component {
 
           <hr />
 
-          <div className="article-actions">
+          <div className="challenge-actions">
           </div>
 
           <div className="row">
@@ -94,4 +94,4 @@ class Article extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Article);
+export default connect(mapStateToProps, mapDispatchToProps)(Challenge);

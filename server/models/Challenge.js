@@ -3,7 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
 var User = mongoose.model('User');
 
-var ArticleSchema = new mongoose.Schema({
+var ChallengeSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
   title: String,
   description: String,
@@ -14,29 +14,29 @@ var ArticleSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {timestamps: true});
 
-ArticleSchema.plugin(uniqueValidator, {message: 'is already taken'});
+ChallengeSchema.plugin(uniqueValidator, {message: 'is already taken'});
 
-ArticleSchema.pre('validate', function(next){
+ChallengeSchema.pre('validate', function(next){
   this.slugify();
 
   next();
 });
 
-ArticleSchema.methods.slugify = function() {
+ChallengeSchema.methods.slugify = function() {
   this.slug = slug(this.title);
 };
 
-ArticleSchema.methods.updateFavoriteCount = function() {
-  var article = this;
+ChallengeSchema.methods.updateFavoriteCount = function() {
+  var challenge = this;
 
-  return User.count({favorites: {$in: [article._id]}}).then(function(count){
-    article.favoritesCount = count;
+  return User.count({favorites: {$in: [challenge._id]}}).then(function(count){
+    challenge.favoritesCount = count;
 
-    return article.save();
+    return challenge.save();
   });
 };
 
-ArticleSchema.methods.toJSONFor = function(user){
+ChallengeSchema.methods.toJSONFor = function(user){
   return {
     slug: this.slug,
     title: this.title,
@@ -51,4 +51,4 @@ ArticleSchema.methods.toJSONFor = function(user){
   };
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Challenge', ChallengeSchema);

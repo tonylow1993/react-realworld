@@ -42,39 +42,39 @@ const Tags = {
 };
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
-const omitSlug = article => Object.assign({}, article, { slug: undefined })
-const Articles = {
+const omitSlug = challenge => Object.assign({}, challenge, { slug: undefined })
+const Challenges = {
   all: page =>
-    requests.get(`/articles?${limit(10, page)}`),
+    requests.get(`/challenges?${limit(10, page)}`),
   byAuthor: (author, page) =>
-    requests.get(`/articles?author=${encode(author)}&${limit(5, page)}`),
+    requests.get(`/challenges?author=${encode(author)}&${limit(5, page)}`),
   byTag: (tag, page) =>
-    requests.get(`/articles?tag=${encode(tag)}&${limit(10, page)}`),
+    requests.get(`/challenges?tag=${encode(tag)}&${limit(10, page)}`),
   del: slug =>
-    requests.del(`/articles/${slug}`),
+    requests.del(`/challenges/${slug}`),
   favorite: slug =>
-    requests.post(`/articles/${slug}/favorite`),
+    requests.post(`/challenges/${slug}/favorite`),
   favoritedBy: (author, page) =>
-    requests.get(`/articles?favorited=${encode(author)}&${limit(5, page)}`),
+    requests.get(`/challenges?favorited=${encode(author)}&${limit(5, page)}`),
   feed: () =>
-    requests.get('/articles/feed?limit=10&offset=0'),
+    requests.get('/challenges/feed?limit=10&offset=0'),
   get: slug =>
-    requests.get(`/articles/${slug}`),
+    requests.get(`/challenges/${slug}`),
   unfavorite: slug =>
-    requests.del(`/articles/${slug}/favorite`),
-  update: article =>
-    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
-  create: article =>
-    requests.post('/articles', { article })
+    requests.del(`/challenges/${slug}/favorite`),
+  update: challenge =>
+    requests.put(`/challenges/${challenge.slug}`, { challenge: omitSlug(challenge) }),
+  create: challenge =>
+    requests.post('/challenges', { challenge })
 };
 
 const Comments = {
   create: (slug, comment) =>
-    requests.post(`/articles/${slug}/comments`, { comment }),
+    requests.post(`/challenges/${slug}/comments`, { comment }),
   delete: (slug, commentId) =>
-    requests.del(`/articles/${slug}/comments/${commentId}`),
-  forArticle: slug =>
-    requests.get(`/articles/${slug}/comments`)
+    requests.del(`/challenges/${slug}/comments/${commentId}`),
+  forChallenge: slug =>
+    requests.get(`/challenges/${slug}/comments`)
 };
 
 const Profile = {
@@ -87,7 +87,7 @@ const Profile = {
 };
 
 export default {
-  Articles,
+  Challenges,
   Auth,
   Comments,
   Profile,

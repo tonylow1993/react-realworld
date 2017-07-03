@@ -1,5 +1,5 @@
-import article from './reducers/article';
-import articleList from './reducers/articleList';
+import challenge from './reducers/challenge';
+import challengeList from './reducers/challengeList';
 import auth from './reducers/auth';
 import { combineReducers } from 'redux';
 import common from './reducers/common';
@@ -10,8 +10,8 @@ import profileFavorites from './reducers/profileFavorites';
 import settings from './reducers/settings';
 
 export default combineReducers({
-  article,
-  articleList,
+  challenge,
+  challengeList,
   auth,
   common,
   editor,

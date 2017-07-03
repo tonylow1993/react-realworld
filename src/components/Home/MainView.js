@@ -1,4 +1,4 @@
-import ArticleList from '../ArticleList';
+import ChallengeList from '../ChallengeList';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ const YourFeedTab = props => {
   if (props.token) {
     const clickHandler = ev => {
       ev.preventDefault();
-      props.onTabClick('feed', agent.Articles.feed, agent.Articles.feed());
+      props.onTabClick('feed', agent.Challenges.feed, agent.Challenges.feed());
     }
 
     return (
@@ -27,7 +27,7 @@ const YourFeedTab = props => {
 const GlobalFeedTab = props => {
   const clickHandler = ev => {
     ev.preventDefault();
-    props.onTabClick('all', agent.Articles.all, agent.Articles.all());
+    props.onTabClick('all', agent.Challenges.all, agent.Challenges.all());
   };
   return (
     <li className="nav-item">
@@ -56,7 +56,7 @@ const TagFilterTab = props => {
 };
 
 const mapStateToProps = state => ({
-  ...state.articleList,
+  ...state.challengeList,
   tags: state.home.tags,
   token: state.common.token
 });
@@ -83,11 +83,11 @@ const MainView = props => {
         </ul>
       </div>
 
-      <ArticleList
+      <ChallengeList
         pager={props.pager}
-        articles={props.articles}
+        challenges={props.challenges}
         loading={props.loading}
-        articlesCount={props.articlesCount}
+        challengesCount={props.challengesCount}
         currentPage={props.currentPage} />
     </div>
   );

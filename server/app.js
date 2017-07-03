@@ -39,7 +39,7 @@ if(isProduction){
 }
 
 require('./models/User');
-require('./models/Article');
+require('./models/Challenge');
 require('./models/Comment');
 require('./config/passport');
 
