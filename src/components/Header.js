@@ -1,6 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router';
-import "../assets/css/header.css"
+import "../assets/css/header.css";
+import { connect } from 'react-redux';
+import {
+  LOGOUT,
+} from '../constants/actionTypes';
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+  onClickLogout: () => dispatch({ type: LOGOUT }),
+});
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
@@ -35,10 +45,9 @@ const LoggedInView = props => {
   if (props.currentUser) {
     return (
       <ul className="nav navbar-nav pull-xs-right">
-
         <li className="nav-item">
-          <Link to="" className="nav-link">
-            Home
+          <Link onClick={props.onClickLogout} className="nav-link" to="/">
+            Logout
           </Link>
         </li>
 
@@ -82,11 +91,11 @@ class Header extends React.Component {
 
           <LoggedOutView currentUser={this.props.currentUser} />
 
-          <LoggedInView currentUser={this.props.currentUser} />
+          <LoggedInView currentUser={this.props.currentUser} onClickLogout={this.props.onClickLogout}/>
         </div>
       </nav>
     );
   }
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
