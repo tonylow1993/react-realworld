@@ -67,8 +67,7 @@ const LoggedInView = props => {
           <Link
             to={`@${props.currentUser.username}`}
             className="nav-link">
-            <img src={props.currentUser.image} className="user-pic" alt={props.currentUser.username} />
-            {props.currentUser.username}
+            <i className="ion-person"></i>&nbsp;{props.currentUser.username}
           </Link>
         </li>
 

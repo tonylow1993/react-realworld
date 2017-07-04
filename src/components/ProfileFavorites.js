@@ -33,16 +33,16 @@ class ProfileFavorites extends Profile {
         <li className="nav-item">
           <Link
             className="nav-link"
-            to={`@${this.props.profile.username}`}>
-            My Challenges
+            to={`@${this.props.params.username}`}>
+            Current Challenges
           </Link>
         </li>
 
         <li className="nav-item">
           <Link
             className="nav-link active"
-            to={`@${this.props.profile.username}/favorites`}>
-            Favorited Challenges
+            to={`@${this.props.params.username}/favorites`}>
+            Achievemens
           </Link>
         </li>
       </ul>

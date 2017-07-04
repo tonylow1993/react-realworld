@@ -34,7 +34,7 @@ const Banner = ({ appName, token }) => {
         "AP": "Intelligence",
         "points": 109.9
       }, {
-        "AP": "Social",
+        "AP": "Sociability",
         "points": 108.3
       }, {
         "AP": "Luck",
